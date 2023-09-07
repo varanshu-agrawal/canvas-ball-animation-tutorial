@@ -54,25 +54,35 @@ function Ball(x, y, radius, color) {
     }
 }
 
+const getDistance = (x1, x2, y1, y2) => {
+    const xDist = x2 - x1
+    const yDist = y2 - y1
+    return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
+}
+
 // Implementation
 let objects
+let circle1
+let circle2
 function init() {
-    objects = []
-
-    for (let i = 0; i < 400; i++) {
-        // objects.push()
-    }
+    circle1 = new Ball(canvas.width / 2, canvas.height / 2, 100, 'red')
+    circle2 = new Ball(undefined, undefined, 20, 'blue')
 }
 
 // Animation Loop
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
+    circle1.update()
+    circle2.x = mouse.x
+    circle2.y = mouse.y
+    circle2.update()
 
-    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
-    // objects.forEach(object => {
-    //  object.update()
-    // })
+    if (getDistance(circle1.x, circle2.x, circle1.y, circle2.y) <= (circle1.radius + circle2.radius))
+        circle2.color = "green"
+    else circle2.color = "blue"
+
+    console.log(getDistance(circle1.x, circle2.x, circle1.y, circle2.y));
 }
 
 init()
